@@ -1,4 +1,4 @@
-from models.orders import Order
+from models.order import Order
 
 class OrderService:
     def __init__(self, order_repo, user_service, cart_service, product_service):

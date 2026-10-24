@@ -23,7 +23,7 @@ class CartSerivce:
         user_cart = self.cart_repo.get_cart_by_user_id(user_id)
 
         if not user_cart or len(user_cart.items) == 0:
-            return [], 0
+            return 0, []
 
         total_cart = user_cart.calculate_total_cart
 

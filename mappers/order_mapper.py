@@ -1,6 +1,6 @@
 from mappers.cart_mapper import CartMapper
-from models.users import User
-from models.orders import Order
+from models.user import User
+from models.order import Order
 
 class OrderMapper:
 

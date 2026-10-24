@@ -1,4 +1,4 @@
-from models.users import User
+from models.user import User
 
 class UserService:
     def __init__(self, user_repo):

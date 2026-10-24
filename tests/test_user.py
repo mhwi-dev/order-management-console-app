@@ -4,7 +4,7 @@ import os
 # 1. PHẢI ĐẶT 2 DÒNG NÀY TRÊN CÙNG (Trước các dòng import models, services, repos)
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from models.users import User
+from models.user import User
 from repositories.user_repo import UserRepo
 from services.user_service import UserService
 
