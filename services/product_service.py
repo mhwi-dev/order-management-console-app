@@ -66,6 +66,9 @@ class ProductService:
     def update_product(self, product_id, name = None, price = None, stock = None):
         product = self.product_repo.get_product_by_product_id(product_id)
 
+        if not product:
+            raise ValueError(f"ERROR: Product ID #{product_id} not exists!")
+
         if name is not None:
             product.name = name
 

@@ -54,3 +54,9 @@ def test_add_product_empty_name(tmp_path, name):
         service.add_new_product(name, 55000, 15)
 
     assert len(service.show_products()) == 0
+
+def test_update_product_not_found(tmp_path):
+    service = make_service(tmp_path)
+
+    with pytest.raises(ValueError):
+        service.update_product(999, name="Ghost")
