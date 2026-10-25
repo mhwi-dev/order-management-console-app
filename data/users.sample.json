@@ -12,5 +12,12 @@
         "password": "demo_password_456",
         "full_name": "Nguyen Van A",
         "role": "customer"
+    },
+    "3": {
+        "user_id": 3,
+        "username": "huy_test",
+        "password": "123456",
+        "full_name": "Nguyen Minh Huy",
+        "role": "customer"
     }
 }
