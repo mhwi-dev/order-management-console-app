@@ -42,3 +42,20 @@ def test_get_user_invalid(tmp_path):
     assert "user_loi_1" in invalid_usernames
     assert "user_loi_2" in invalid_usernames
     assert "huy_nguyen" not in invalid_usernames
+
+def test_duplicate_username(tmp_path):
+    service = make_service(tmp_path)
+
+    service.sign_up("huy_nguyen", "123456", "Nguyen Huy", "customer")
+
+    with pytest.raises(ValueError):
+        service.sign_up("huy_nguyen", "123456", "Nguyen Huy", "customer")
+
+def test_login_nonexistent_username(tmp_path):
+    service = make_service(tmp_path)
+
+    service.sign_up("gdsagsa", "123456", "Nguyen Huy", "customer")
+
+    with pytest.raises(ValueError):
+        service.sign_up("huy_nguyen", "123456", "Nguyen Huy", "customer")
+
