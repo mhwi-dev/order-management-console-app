@@ -60,3 +60,34 @@ def test_update_product_not_found(tmp_path):
 
     with pytest.raises(ValueError):
         service.update_product(999, name="Ghost")
+
+def test_update_product_negative_price(tmp_path):
+    service = make_service(tmp_path)
+    service.add_new_product("Peach Tea", 55000, 15)
+
+    with pytest.raises(ValueError):
+        service.update_product(1, price= -5)
+
+def test_update_product_negative_price(tmp_path):
+    service = make_service(tmp_path)
+    service.add_new_product("Peach Tea", 55000, 15)
+
+    with pytest.raises(ValueError):
+        service.update_product(1, stock= -5)
+
+def test_update_product_duplicate_name(tmp_path):
+    service = make_service(tmp_path)
+    service.add_new_product("Peach Tea", 55000, 15)
+    service.add_new_product("Pink Guava", 55000, 12)
+
+    with pytest.raises(ValueError):
+        service.update_product(2, name= 'Peach Tea')
+
+def test_update_product_same_name_allowed(tmp_path):
+    service = make_service(tmp_path)
+    service.add_new_product("Peach Tea", 55000, 15)
+    service.update_product(1, name="Peach Tea", price=59000)
+
+    updated = service.get_product_by_id(1)
+    assert updated.price == 59000
+    assert updated.name == "Peach Tea"

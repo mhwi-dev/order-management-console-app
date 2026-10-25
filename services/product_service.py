@@ -70,6 +70,19 @@ class ProductService:
             raise ValueError(f"ERROR: Product ID #{product_id} not exists!")
 
         if name is not None:
+            if not name.strip():
+                raise ValueError("ERROR: Product name cannot be empty!")
+
+            if name != product.name and self.product_repo.exists_by_name(name):
+                raise ValueError("ERROR: This product name already exists!")
+
+        if price is not None and price < 0:
+            raise ValueError("ERROR: Price must be >= 0!")
+
+        if stock is not None and stock < 0:
+            raise ValueError("ERROR: Stock must be >= 0!")
+    
+        if name is not None:
             product.name = name
 
         if price is not None:
