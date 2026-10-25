@@ -15,8 +15,9 @@ env/
 # macOS
 .DS_Store
 
-# Runtime data
+# Runtime data 
 data/*.json
+!data/*.sample.json
 
 # Environment variables
 .env

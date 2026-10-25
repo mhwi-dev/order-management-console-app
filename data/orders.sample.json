@@ -1,0 +1,14 @@
+{
+    "2": {
+        "user_id": 2,
+        "items": {
+            "1": {
+                "product_id": 1,
+                "name": "Coffee",
+                "price": 30000,
+                "quantity": 2,
+                "note": "Less ice"
+            }
+        }
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "1": {
+        "user_id": 1,
+        "username": "admin_demo",
+        "password": "demo_password_123",
+        "full_name": "System Admin",
+        "role": "admin"
+    },
+    "2": {
+        "user_id": 2,
+        "username": "customer_demo",
+        "password": "demo_password_456",
+        "full_name": "Nguyen Van A",
+        "role": "customer"
+    }
+}

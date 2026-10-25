@@ -1,0 +1,26 @@
+{
+    "1": {
+        "order_id": 1,
+        "user_id": 2,
+        "items": {
+            "1": {
+                "product_id": 1,
+                "name": "Coffee",
+                "price": 30000,
+                "quantity": 2,
+                "note": ""
+            },
+            "2": {
+                "product_id": 2,
+                "name": "Cake",
+                "price": 40000,
+                "quantity": 2,
+                "note": ""
+            }
+        },
+        "type": "To go",
+        "address": "123 Demo Street",
+        "total": 140000,
+        "status": "pending"
+    }
+}
