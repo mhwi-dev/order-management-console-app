@@ -37,6 +37,18 @@ class ProductService:
 
     # CRUD PRODUCT
     def add_new_product(self, name, price, stock):
+
+        if not name.strip():
+            raise ValueError("ERROR: Product name cannot be empty!")
+
+        if self.product_repo.exists_by_name(name):
+            raise ValueError("ERROR: This product name already exists!")
+
+        if price < 0:
+            raise ValueError("ERROR: Price must be >= 0!")
+
+        if stock < 0:
+            raise ValueError("ERROR: Stock must be >= 0!")
         
         next_id = self.product_repo.get_next_id()
 
