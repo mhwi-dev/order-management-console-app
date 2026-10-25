@@ -57,5 +57,5 @@ def test_login_nonexistent_username(tmp_path):
     service.sign_up("gdsagsa", "123456", "Nguyen Huy", "customer")
 
     with pytest.raises(ValueError):
-        service.sign_up("huy_nguyen", "123456", "Nguyen Huy", "customer")
+        service.login("khong_ton_tai", "123456")
 
