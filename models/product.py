@@ -18,7 +18,7 @@ class Product:
             f"Product(product_id={self.product_id!r}, "
             f"name={self.name!r}, "
             f"price={self.price!r}, "
-            f"quantity={self.stock!r})")
+            f"stock={self.stock!r})")
 
     def reduce_stock(self, amount: int):
         if amount <= 0:
