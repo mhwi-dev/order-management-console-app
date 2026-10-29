@@ -102,6 +102,9 @@ class ProductService:
         if not product:
             raise ValueError (f"ERROR: Product ID #{product_id} not exists!")
 
+        if quantity <= 0:
+            raise ValueError(f"ERROR: Quantity must be positve number and greater than 0.")
+
         if not product.reduce_stock(quantity):
             raise ValueError (f"ERROR: Product '{product.name}' only {product.stock} left. Not enough {quantity}!")
 
