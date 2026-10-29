@@ -68,7 +68,7 @@ def test_update_product_negative_price(tmp_path):
     with pytest.raises(ValueError):
         service.update_product(1, price= -5)
 
-def test_update_product_negative_price(tmp_path):
+def test_update_product_negative_stock(tmp_path):
     service = make_service(tmp_path)
     service.add_new_product("Peach Tea", 55000, 15)
 
@@ -91,3 +91,57 @@ def test_update_product_same_name_allowed(tmp_path):
     updated = service.get_product_by_id(1)
     assert updated.price == 59000
     assert updated.name == "Peach Tea"
+
+def test_reduce_success(tmp_path):
+    service = make_service(tmp_path)
+    service.add_new_product("Peach Tea", 55000, 15)
+
+    service.reduce(1, 5)
+
+    assert service.get_product_by_id(1).stock == 10
+
+def test_reduce_zero_quantity(tmp_path):
+    service = make_service(tmp_path)
+    service.add_new_product("Peach Tea", 55000, 15)
+
+    with pytest.raises(ValueError):
+        service.reduce(1,0)
+
+def test_reduce_negative_quantity(tmp_path):
+    service = make_service(tmp_path)
+    service.add_new_product("Peach Tea", 55000, 15)
+
+    with pytest.raises(ValueError):
+        service.reduce(1,-1)
+
+def test_reduce_insufficient_stock(tmp_path):
+    service = make_service(tmp_path)
+    service.add_new_product("Peach Tea", 55000, 15)
+
+    with pytest.raises(ValueError):
+        service.reduce(1,16)
+
+def test_reduce_nonexistent_product(tmp_path):
+    service = make_service(tmp_path)
+    service.add_new_product("Peach Tea", 55000, 15)
+
+    with pytest.raises(ValueError):
+        service.reduce(2,3)
+
+def test_reduce_exact_available_stock(tmp_path):
+    service = make_service(tmp_path)
+    service.add_new_product("Peach Tea", 55000, 15)
+    service.reduce(1,15)
+
+    product= service.get_product_by_id(1) 
+    assert product.stock == 0 
+
+def test_reduce_insufficient_stock_keeps_stock_unchanged(tmp_path):
+    service = make_service(tmp_path)
+    service.add_new_product("Peach Tea", 55000, 15)
+
+    with pytest.raises(ValueError):
+        service.reduce(1,16)
+
+    product = service.get_product_by_id(1)
+    assert product.stock == 15
