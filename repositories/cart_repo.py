@@ -1,6 +1,5 @@
 import os 
 import json
-from models.cart import Cart
 from mappers.cart_mapper import CartMapper
 
 class CartRepo:

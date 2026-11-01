@@ -10,7 +10,7 @@ from controllers.product_controller import ProductController
 
 #CART IMPORT
 from repositories.cart_repo import CartRepo
-from services.cart_service import CartSerivce
+from services.cart_service import CartService
 from controllers.cart_controller import CartController
 
 #ORDER IMPORT
@@ -35,7 +35,7 @@ def run_system():
 
     #CART
     cart_repo = CartRepo()
-    cart_service = CartSerivce(cart_repo)
+    cart_service = CartService(cart_repo)
     cart_controller = CartController(cart_service, product_service)
 
     #ORDER

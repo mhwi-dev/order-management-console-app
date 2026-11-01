@@ -22,7 +22,7 @@ class CartController:
                 continue
 
             if product.stock <= 0:
-                print(f"ERROR: Product ID #{product_id} out of stock or not exists! Try again later.")
+                print(f"ERROR: Product ID #{product_id} out of stock! Try again later.")
                 continue
 
             while add_quantity:
@@ -43,14 +43,13 @@ class CartController:
             if not add_quantity:
                 continue
 
-            note_inp = input("Enter note (PRESS ENTER TO SKIP): ").strip()
-            note = note_inp if note_inp is not None else None
+            note = input("Enter note (PRESS ENTER TO SKIP): ").strip() or None
 
             print("\n==================================================================")
             print(f"{product} | Quantity: {quantity} | Note: {note if note else 'X'}")
 
             print("\n------------------------------ CONFIRM STEP ------------------------")
-            print('1. Cofirm, add to cart | 2. No, cancel')
+            print('1. Confirm, add to cart | 2. No, cancel')
 
             choice = Helper.input_is_valid("--> Enter choice: ",1,2)
 

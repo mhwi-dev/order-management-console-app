@@ -19,22 +19,40 @@ class Cart:
         product_key = int(product.product_id)
 
         if product_key not in self.items:
-            self.items[product_key] = CartItem(product, quantity, note)
+            if quantity > product.stock:
+                raise ValueError(f"ERROR: Not enough stock! Product: {product.name} only {product.stock} left.")
+            else:
+                self.items[product_key] = CartItem(product, quantity, note)
         else:
-            self.items[product_key].quantity += quantity
+            current_quantity = self.items[product_key].quantity
+            new_quantity = current_quantity + quantity
+
+            if new_quantity > product.stock:
+                raise ValueError(f"ERROR: Not enough stock! Product: {product.name} only {product.stock} left.")
+            
+            self.items[product_key].quantity = new_quantity
+
             if note:
                 self.items[product_key].note = note
         return True
 
     def remove_item(self, product_id: int) -> bool:
-        if product_id in self.items:
-            del self.items[product_id]
+        product_key = int(product_id)
+
+        if product_key in self.items:
+            del self.items[product_key]
             return True
+
         return False
 
-    def remove_items(self, products_ids: list) -> None:
+    def remove_items(self, products_ids: list) -> int:
+        removed_count = 0
+
         for p_id in products_ids:
-            self.remove_item(p_id)
+            if self.remove_item(p_id):
+                removed_count += 1
+
+        return removed_count
 
     def clear(self) -> None:
         self.items.clear()
