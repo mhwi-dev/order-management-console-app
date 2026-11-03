@@ -36,7 +36,13 @@ class UserController:
 
             if confirm_choice == 1:
                 try: 
-                    self.user_service.sign_up(username, password, full_name, target_role)
+                    self.user_service.sign_up(
+                        username,
+                        password,
+                        full_name,
+                        target_role,
+                        current_user
+                    )
                     print('-'*60)
                     print(f"NOTIFY: Sign up '{full_name}' successfully!")
                     return
