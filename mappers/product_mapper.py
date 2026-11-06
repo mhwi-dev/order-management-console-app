@@ -3,7 +3,7 @@ from models.product import Product
 class ProductMapper:
 
     @staticmethod
-    def to_product_model(product_raw: dict) -> Product:
+    def to_product_model(product_raw: dict | None) -> Product | None:
         if not product_raw or not isinstance(product_raw, dict):
             return None
         
@@ -16,8 +16,8 @@ class ProductMapper:
 
     @staticmethod
     def to_product_raw(product_obj: Product) -> dict:
-        if not product_obj or not isinstance(product_obj, Product):
-            return None
+        if not isinstance(product_obj, Product):
+            raise TypeError("Expected Product object")
         
         return {
             'product_id': product_obj.product_id,

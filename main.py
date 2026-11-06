@@ -4,7 +4,7 @@ from services.user_service import UserService
 from controllers.user_controller import UserController
 
 #PRODUCT IMPORT
-from repositories.product_repo import ProdudctRepo
+from repositories.product_repo import ProductRepo
 from services.product_service import ProductService
 from controllers.product_controller import ProductController
 
@@ -29,7 +29,7 @@ def run_system():
     user_controller = UserController(user_service)
 
     #PRODUCT
-    product_repo = ProdudctRepo()
+    product_repo = ProductRepo()
     product_service = ProductService(product_repo)
     product_controller = ProductController(product_service)
 

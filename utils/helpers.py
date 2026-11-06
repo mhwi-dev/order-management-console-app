@@ -1,22 +1,29 @@
+from models.product import Product
+
+
 class Helper:
 
     @staticmethod
-    def non_empty(message):
+    def non_empty(message: str) -> str:
+
         while True:
-            inp = input(message).strip()
+            value = input(message).strip()
 
-            if inp == '':
-                print("ERROR: This field cannot be empty! Try again.")
-                continue
+            if value:
+                return value
 
-            return inp
+            print("ERROR: This field cannot be empty! Try again.")
 
     @staticmethod
-    def input_is_valid(message, start = 0, end = None):
+    def input_is_valid(
+        message: str,
+        start: int | None = 0,
+        end: int | None = None
+    ) -> int:
+        
         while True:
-            inp = Helper.non_empty(message)
-            try:
-                value = int(inp)
+            try: 
+                value = int(Helper.non_empty(message))
 
                 if start is not None and value < start:
                     print(f"ERROR: Values must be >= {start}! Try again.")
@@ -29,47 +36,66 @@ class Helper:
                 return value
 
             except ValueError:
-                print("ERROR: This field must be enter a valid interger! Try again.")
+                print("ERROR: This field must be a valid integer! Try again.")
 
     @staticmethod
-    def input_positive(message, allow_zero = False):
+    def input_positive(
+        message: str,
+        allow_zero: bool = False
+    ) -> int:
+        
         while True:
-            inp = Helper.non_empty(message)
+            try:
+                value = int(Helper.non_empty(message))
 
-            try: 
-                value = int(inp)
-
-                if (allow_zero and value >= 0) or (not allow_zero and value > 0):
+                if value > 0 or (allow_zero and value == 0):
                     return value
 
-                if allow_zero:
-                    print("ERROR: Value must be enter a number greater than or equal to 0! Try again.")
-                else:
-                    print("ERROR: Value must be enter a number greater than 0! Try again.")
+                print(
+                    "ERROR: Value must be "
+                    + ("greater than or equal to 0!" if allow_zero
+                       else "greater than 0!")
+                )
 
             except ValueError:
-                print("ERROR: This field must be enter a positive number! Try again.")
+                print("ERROR: This field must be a positive number! Try again.")
 
     @staticmethod
-    def _is_valid(p_id, p, allow_show_stock_0 = False) -> bool:
-        if not p_id or not p or not p.product_id or not p.name:
+    def is_valid(
+        p_id: int,
+        product: Product | None,
+        allow_show_stock_0: bool = False
+    ) -> bool:
+
+        if product is None:
+            return False
+        
+        if p_id <= 0 or product.product_id != p_id:
             return False
 
-        if p.price is None or p.price < 0:
+        if not product.name or not product.name.strip():
             return False
 
-        if allow_show_stock_0:
-            if p.stock is None or p.stock < 0:
-                return False
+        if product.price is None or product.price < 0:
+            return False
 
-        if not allow_show_stock_0:
-            if p.stock is None or p.stock <= 0:
-                return False
+        if product.stock is None or product.stock < 0:
+            return False
+
+        if product.stock == 0 and not allow_show_stock_0:
+            return False
+
+        if not allow_show_stock_0 and product.stock == 0:
+            return False
 
         return True
 
     @staticmethod
-    def input_optional_positive(message, is_float = False):
+    def input_optional_positive(
+        message: str,
+        is_float: bool = False
+    ) -> int | float | None:
+        
         while True:
             inp = input(message).strip()
 
@@ -77,12 +103,13 @@ class Helper:
                 return None
 
             try:
-                val = float(inp) if is_float else int(inp)
+                value = float(inp) if is_float else int(inp)
 
-                if val >= 0:
-                    return val
+                if value < 0:
+                    print("ERROR: Value must be >= 0! Try again.")
+                    continue
 
-                print("ERROR: Value must be >= 0! Try again.")
+                return value
 
             except ValueError:
-                print("ERROR: Invalid number! Try again")
+                print("ERROR: Invalid number! Try again.")

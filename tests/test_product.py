@@ -4,11 +4,11 @@ import pytest
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from repositories.product_repo import ProdudctRepo
+from repositories.product_repo import ProductRepo
 from services.product_service import ProductService
 
 def make_service(tmp_path):
-    repo = ProdudctRepo(file_path= str(tmp_path / "products.json"))
+    repo = ProductRepo(file_path= str(tmp_path / "products.json"))
     return ProductService(repo)
 
 def test_add_product_success(tmp_path):

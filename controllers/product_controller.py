@@ -1,13 +1,14 @@
 from utils.helpers import Helper
+from services.product_service import ProductService
 
 class ProductController:
-    def __init__(self, product_service):
+    def __init__(self, product_service: ProductService) -> None:
         self.product_service = product_service
 
     #============================================================================================
     #----------------------------- HANDLE SHOW PRODUCTS ADMIN / CUSTOMER ------------------------
     #============================================================================================
-    def handle_show_products(self): # FOR ADMIN (SHOW ALL)
+    def handle_show_products(self) -> None: # FOR ADMIN (SHOW ALL)
         products = self.product_service.show_products()
 
         if not products:
@@ -17,7 +18,7 @@ class ProductController:
         for p in products.values():
             print(p)
 
-    def handle_show_products_customer(self): # FOR CUSTOMER (SHOW VALID AND NOT ALLOW_STOCK_0)
+    def handle_show_products_customer(self) -> None: # FOR CUSTOMER (SHOW VALID AND NOT ALLOW_STOCK_0)
         print("\n================================= MENU PRODUCT ==============================")
         products = self.product_service.get_products_valid_customer()
 
@@ -28,7 +29,7 @@ class ProductController:
         for p in products.values():
             print(p)
 
-    def handle_get_products_invalid(self): # FOR ADMIN (SHOW INVALID)
+    def handle_get_products_invalid(self) -> None: # FOR ADMIN (SHOW INVALID)
         print("\n================================== PRODUCT INVALID ===========================")
         products = self.product_service.get_products_invalid()
 
@@ -36,12 +37,13 @@ class ProductController:
             print("NOTIFY: No product invalid!")
             return
 
-        print(products)
+        for p in products.values():
+            print(p)
 
     #============================================================================================
     #--------------------------------------- HANDLE CRUD ----------------------------------------
     #============================================================================================
-    def handle_add_new_product(self):
+    def handle_add_new_product(self) -> None:
         while True:
             print("\n============================= ADD NEW PRODUCT ===========================")
             name = Helper.non_empty("Enter product name (ENTER 0 TO RETURN): ").title()
@@ -83,7 +85,7 @@ class ProductController:
                 print("NOTIFY: Return....")
                 return
 
-    def handle_update_product(self):
+    def handle_update_product(self) -> None:
         while True:
             print("\n============================== UPDATE PRODUCT ============================")
             product_id = Helper.input_positive("Enter Product ID (ENTER 0 TO RETURN): ", allow_zero= True)
@@ -100,9 +102,9 @@ class ProductController:
 
             while True:
                 name_inp = input("Enter name (ENTER TO SKIP): ").strip()
-                name = name_inp.lower() if name_inp else None
+                name = name_inp if name_inp else None
 
-                if name and name.lower() != product.name.lower() and self.product_service.check_exists_by_name(name):
+                if name and name.casefold() != product.name.casefold() and self.product_service.check_exists_by_name(name):
                     print(f"ERROR: Name #{name} already exists! Try again.")
                     continue
 
@@ -110,6 +112,10 @@ class ProductController:
 
             price = Helper.input_optional_positive("Enter price (ENTER TO SKIP): ", is_float= True)
             stock = Helper.input_optional_positive("Enter stock (ENTER TO SKIP): ")
+
+            if name is None and price is None and stock is None:
+                print("NOTIFY: No information to update!")
+                continue
 
             print("\n------------------------------ REVIEW ---------------------------")
             print(f"Name: {product.name} ----> New name: {name if name else 'Unchanged'}")
@@ -139,10 +145,10 @@ class ProductController:
                 print("NOTIFY: Return.....")
                 return
 
-    def handle_delete_product(self):
+    def handle_delete_product(self) -> None:
         while True:
             print("\n============================== DELETE PRODUCT ============================")
-            product_id = Helper.input_positive("Enter Product ID (ENTER 0 TO RETURN): ")
+            product_id = Helper.input_positive("Enter Product ID (ENTER 0 TO RETURN): ", allow_zero= True)
 
             if product_id == 0:
                 print("NOTIFY: Return....")

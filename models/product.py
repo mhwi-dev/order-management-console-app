@@ -1,11 +1,18 @@
 class Product:
-    def __init__(self, product_id, name, price, stock):
+    def __init__(
+        self,
+        product_id: int,
+        name: str,
+        price: float,
+        stock: int
+    ) -> None:
+        
         self.product_id = product_id
         self.name = name
         self.price = price
         self.stock = stock
 
-    def __str__(self):
+    def __str__(self) -> str:
         return (
             f"Product ID: {self.product_id:<5} | "
             f"Name: {self.name:<20} | "
@@ -13,14 +20,17 @@ class Product:
             f"Stock: {self.stock}"
         )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return (
             f"Product(product_id={self.product_id!r}, "
             f"name={self.name!r}, "
             f"price={self.price!r}, "
             f"stock={self.stock!r})")
 
-    def reduce_stock(self, amount: int):
+    def reduce_stock(self, amount: int) -> bool:
+        if not isinstance(amount, int) or isinstance(amount, bool):
+            return False
+        
         if amount <= 0:
             return False
 
