@@ -1,26 +1,42 @@
+from models.product import Product
+
+
 class CartItem:
-    def __init__(self, product, quantity, note):
+    def __init__(self, product: Product, quantity: int, note: str) -> None:
         self.product = product
         self.quantity = quantity
         self.note = note
 
-    def total_price(self):
+    def total_price(self) -> int | float:
         return self.product.price * self.quantity
 
+
 class Cart:
-    def __init__(self, user_id, items = None):
-        self.user_id = user_id 
+    def __init__(
+        self,
+        user_id: int,
+        items: dict[int, CartItem] | None = None
+    ) -> None:
+        self.user_id = user_id
         self.items = items if items is not None else {}
 
-    def has_product(self, product_id):
+    def has_product(self, product_id: int) -> bool:
         return int(product_id) in self.items
 
-    def add_item(self, product, quantity, note):
+    def add_item(
+        self,
+        product: Product,
+        quantity: int,
+        note: str
+    ) -> bool:
         product_key = int(product.product_id)
 
         if product_key not in self.items:
             if quantity > product.stock:
-                raise ValueError(f"ERROR: Not enough stock! Product: {product.name} only {product.stock} left.")
+                raise ValueError(
+                    f"ERROR: Not enough stock! Product: {product.name} "
+                    f"only {product.stock} left."
+                )
             else:
                 self.items[product_key] = CartItem(product, quantity, note)
         else:
@@ -28,12 +44,16 @@ class Cart:
             new_quantity = current_quantity + quantity
 
             if new_quantity > product.stock:
-                raise ValueError(f"ERROR: Not enough stock! Product: {product.name} only {product.stock} left.")
-            
+                raise ValueError(
+                    f"ERROR: Not enough stock! Product: {product.name} "
+                    f"only {product.stock} left."
+                )
+
             self.items[product_key].quantity = new_quantity
 
             if note:
                 self.items[product_key].note = note
+
         return True
 
     def remove_item(self, product_id: int) -> bool:
@@ -45,7 +65,7 @@ class Cart:
 
         return False
 
-    def remove_items(self, products_ids: list) -> int:
+    def remove_items(self, products_ids: list[int]) -> int:
         removed_count = 0
 
         for p_id in products_ids:
@@ -56,9 +76,7 @@ class Cart:
 
     def clear(self) -> None:
         self.items.clear()
-    
-    @property
-    def calculate_total_cart(self):
-        return sum(item.total_price() for item in self.items.values())
-        
 
+    @property
+    def calculate_total_cart(self) -> int | float:
+        return sum(item.total_price() for item in self.items.values())
