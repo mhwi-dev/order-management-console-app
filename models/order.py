@@ -1,19 +1,31 @@
+from models.cart import CartItem
+
+
 class Order:
-    def __init__(self, order_id, user, items, type, address, total, status):
+    def __init__(
+        self,
+        order_id: int,
+        user_id: int,
+        items: dict[str, CartItem],
+        order_type: str,
+        address: str,
+        total: int,
+        status: str
+    ) -> None:
         self.order_id = order_id
-        self.user = user
+        self.user_id = user_id
         self.items = items
-        self.type = type
+        self.order_type = order_type
         self.address = address
         self.total = total
         self.status = status
 
-    def __str__(self):
+    def __str__(self) -> str:
         return (
             f"Order ID: {self.order_id:<5} | "
-            f"User ID: {self.user:<5} | "
+            f"User ID: {self.user_id:<5} | "
             f"Items: {self.items} | "
-            f"Type: {self.type:<10} | "
+            f"Order Type: {self.order_type:<10} | "
             f"Address: {self.address:<15} | "
             f"Total: ${self.total:>8,.2f} | "
             f"Status: {self.status}"

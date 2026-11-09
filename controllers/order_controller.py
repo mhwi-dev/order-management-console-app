@@ -58,10 +58,10 @@ class OrderController:
                 print("NOTIFY: Confirm place order.... ---->")
                 break
 
-        type = Helper.non_empty("Enter type order: ")
+        order_type = Helper.non_empty("Enter type order: ")
         address = Helper.non_empty("Enter address: ")
 
-        order = self.order_service.place_order(user_id, type, address, select_items)
+        order = self.order_service.place_order(user_id, order_type, address, select_items)
         print('-'*60)
         print(f"NOTIFY: Place Order with Order ID #{order.order_id} successfully!")
         print(f"\n{'-'*60}")
